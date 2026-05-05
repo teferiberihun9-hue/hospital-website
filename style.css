@@ -392,17 +392,6 @@
             color: #ffd966;
         }
 
-        .contact-email {
-            color: #f9f3cf;
-            font-weight: bold;
-        }
-
-        .social-link {
-            background: white;
-            color: #2c7a44;
-            transition: 0.2s;
-        }
-
         .social-link:hover {
             background: #2c7a44;
             color: white;
