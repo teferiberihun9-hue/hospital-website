@@ -34,26 +34,6 @@ function updateActiveLink() {
             }
         }
     });
-}document.addEventListener('DOMContentLoaded', () => {
-    const readMoreLinks = document.querySelectorAll('.read-more');
-
-    readMoreLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // Find the hidden span within the same paragraph
-            const moreText = this.previousElementSibling.querySelector('.more-text');
-            
-            if (moreText.style.display === "none") {
-                moreText.style.display = "inline";
-                this.textContent = "Read less";
-            } else {
-                moreText.style.display = "none";
-                this.textContent = "Read more";
-            }
-        });
-    });
-});
 
 window.addEventListener('scroll', updateActiveLink);
 window.addEventListener('load', updateActiveLink);
