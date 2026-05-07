@@ -1,103 +1,52 @@
 
-const menuToggle = document.getElementById('mobile-menu');
-const navMenu = document.getElementById('nav-menu');
 
-if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('show');
-    });
-}
+document.addEventListener('DOMContentLoaded', function() {
 
+    const explanationDetails = {
+        "5 Ways to Boost Immunity": 
+            <div style="background:#e6f7ff; padding:15px; border-left:5px solid #2c7da0; border-radius:8px; margin-top:10px;">
+                <strong>Immunity Tips:</strong> Eat citrus fruits, sleep 8 hours, and reduce stress.
+            </div>,
+        "Heart Health Month": 
+            <div style="background:#ffe6e6; padding:15px; border-left:5px solid #e63946; border-radius:8px; margin-top:10px;">
+                <strong>Heart Care:</strong> Free BP screenings all March at Mizan Teppi Hospital.
+            </div>,
+        "Vaccination Drive": 
+            <div style="background:#f0fff0; padding:15px; border-left:5px solid #2ecc71; border-radius:8px; margin-top:10px;">
+                <strong>Vaccines:</strong> Free childhood immunizations every Wednesday.
+            </div>
+    };
 
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link');
+ 
+    const buttons = document.querySelectorAll('.read-more');
 
-function updateActiveLink() {
-    let current = '';
-    const scrollPos = window.scrollY + 150;
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        const hrefAttr = link.getAttribute('href');
-        if (hrefAttr && hrefAttr.startsWith('#')) {
-            const href = hrefAttr.substring(1);
-            if (href === current) {
-                link.classList.add('active');
-            }
-        }
-    });
-
-window.addEventListener('scroll', updateActiveLink);
-window.addEventListener('load', updateActiveLink);
-
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const nameValue = document.getElementById('name').value;
-     
-        alert(`Thank you, ${nameValue}! Your message has been sent. We'll reply soon.`);
-        contactForm.reset();
-    });
-}
-
-
-const modal = document.getElementById('appointmentModal');
-const appointBtn = document.getElementById('appointmentBtn');
-const closeModal = document.querySelector('.close-modal');
-
-if (appointBtn && modal) {
-    appointBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        modal.style.display = 'flex';
-    });
-}
-
-if (closeModal && modal) {
-    closeModal.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-}
-
-window.addEventListener('click', (e) => {
-    if (modal && e.target === modal) {
-        modal.style.display = 'none';
-    }
-});
-
-const modalForm = document.getElementById('modalAppointmentForm');
-if (modalForm) {
-    modalForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const modalName = document.getElementById('modalName').value;
-   
-        alert('Appointment requested for ${modalName}. We will contact you soon.');
-        modal.style.display = 'none';
-        modalForm.reset();
-    });
-}
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const targetId = this.getAttribute('href');
-        if (targetId === "#" || targetId === "") return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
             e.preventDefault();
-            targetElement.scrollIntoView({ behavior: 'smooth' });
             
-            if (navMenu && navMenu.classList.contains('show')) {
-                navMenu.classList.remove('show');
+         
+            const parent = button.parentElement;
+            const title = parent.querySelector('h3').innerText.trim();
+            
+            let existingDiv = parent.querySelector('.blog-explanations');
+
+            if (!existingDiv) {
+     
+                const div = document.createElement('div');
+                div.className = 'blog-explanations';
+                div.innerHTML = explanationDetails[title] || "Coming soon...";
+                parent.appendChild(div);
+                button.textContent = 'Read less';
+            } else {
+        
+                if (existingDiv.style.display === 'none') {
+                    existingDiv.style.display = 'block';
+                    button.textContent = 'Read less';
+                } else {
+                    existingDiv.style.display = 'none';
+                    button.textContent = 'Read more';
+                }
             }
-        }
+        });
     });
 });
